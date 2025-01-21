@@ -1,9 +1,12 @@
+import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
 import pokeBall from "/poke_ball.svg";
 
-function Header() {
+const MAX_PARTY_SIZE = 6;
+
+function Header(props) {
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
@@ -17,6 +20,7 @@ function Header() {
           />{" "}
           Pokéverse
         </Navbar.Brand>
+        {props.partySize >= 2 && <Button variant="danger">Battle</Button>}
       </Container>
     </Navbar>
   );
