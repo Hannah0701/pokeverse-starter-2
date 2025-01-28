@@ -1,12 +1,16 @@
+import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
+import { PokemonContext } from "../PokemonContext.js";
 import pokeBall from "/poke_ball.svg";
 
-const MAX_PARTY_SIZE = 6;
+const MIN_PARTY_SIZE = 2;
 
-function Header(props) {
+function Header() {
+  const [inParty] = useContext(PokemonContext);
+
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
@@ -20,7 +24,9 @@ function Header(props) {
           />{" "}
           Pokéverse
         </Navbar.Brand>
-        {props.partySize >= 2 && <Button variant="danger">Battle</Button>}
+        {inParty.length >= MIN_PARTY_SIZE && (
+          <Button variant="danger">Battle</Button>
+        )}
       </Container>
     </Navbar>
   );

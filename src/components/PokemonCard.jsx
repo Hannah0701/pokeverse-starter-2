@@ -1,27 +1,37 @@
+import { useContext } from "react";
+
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+import { PokemonContext, PokemonDispatchContext } from "../PokemonContext.js";
+
+const MAX_PARTY_SIZE = 6;
+
 function PokemonCard(props) {
+  const { inParty } = useContext(PokemonContext);
+  const dispatch = useContext(PokemonDispatchContext);
+
   let button;
 
-  if (props.addToParty) {
+  if (props.location === "pokedex") {
     button = (
       <Button variant="success"
-      disabled={props.partySize === MAX_PARTY_SIZE}
-      onClick={() => props.addToParty(props.pokemon.id)}>
+      disabled={inParty.length === MAX_PARTY_SIZE}
+      onClick={() => dispatch({ type: "added", id: props.pokemon.id })}
+      >
         Add
       </Button>
-    )
-  }
-
-  if (props.removeFromParty) {
+    );
+  } else if (props.location === "party") {
     button = (
       <Button variant="danger"
-      onClick={() => props.removeFromParty(props.pokemon.id)}>
+      onClick={() => dispatch({ type: "removed", id: props.pokemon.id })}
+      >
         Remove
       </Button>
-    )
+    );
   }
+
   return (
     <Card>
       <Card.Img
@@ -32,9 +42,11 @@ function PokemonCard(props) {
         className="w-auto align-self-center"
       />
       <Card.Body>
-        <Card.Title className="text-capitalize text-center">
+        <Card.Title className="text-capitalize">
           {props.pokemon.name}
         </Card.Title>
+        {button}
+      </Card.Body>
     </Card>
   );
 }

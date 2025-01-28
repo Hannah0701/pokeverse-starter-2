@@ -1,17 +1,25 @@
-import { Row } from "react-bootstrap";
-import PokemonGrid from "./PokemonGrid";
+import { useContext } from "react";
 
-function Party(props) {
-    return (
-      <>
-        <h2>My Party ({props.partyPokemon.length})</h2>
+import Row from "react-bootstrap/Row";
+import PokemonGrid from "./PokemonGrid.jsx";
+
+import { PokemonContext } from "../PokemonContext.js";
+
+function Party() {
+  const { inParty } = useContext(PokemonContext);
+
+  return (
+    <>
+      <h2>My Party ({inParty.length})</h2>
+      { inParty.length > 0 ? (
         <Row xs={1} sm={2} md={3} lg={4} xl={5} xxl={6} className="gy-4">
-          <PokemonGrid 
-          pokemon={props.partyPokemon} 
-          removeFromParty={props.removeFromParty} />
+        <PokemonGrid pokemon={inParty} location="party" />
         </Row>
-      </>
-    )
+      ) : (
+        <p>Your party is empty!</p>
+      )}
+    </>
+  );
 }
 
 export default Party;

@@ -8,8 +8,7 @@ function PokemonGrid(props) {
         <Col key={p.name}>
           <PokemonCard 
             pokemon={p}
-            addToParty={props.addToParty}
-            removeFromParty={props.removeFromParty}
+            location={props.location}
           />
         </Col>
       ))}
